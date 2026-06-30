@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>مساعد 707 الذكي المطور - Pro Max</title>
     
-    <!-- External Resources -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -461,7 +460,7 @@
         }
 
         /* ==========================================================================
-           7. BOTTOM CONTROLS & VISUALIZER
+           7. BOTTOM CONTROLS & VISUALIZER (UPDATED WITH TEXT INPUT)
            ========================================================================== */
         .control-area {
             padding: 20px;
@@ -494,27 +493,73 @@
             transition: color 0.3s;
         }
 
-        /* Ultimate Mic Button */
+        /* Unified Input Container */
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 650px;
+            background: var(--bg-secondary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border-glass);
+            margin-bottom: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: border-color var(--transition-fast);
+        }
+
+        .input-container:focus-within {
+            border-color: var(--primary);
+        }
+
+        .text-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1rem;
+            padding: 8px 0;
+            font-family: var(--font-ar);
+        }
+
+        .text-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 6px;
+            transition: color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .send-btn:hover {
+            color: var(--primary);
+            transform: scale(1.05);
+        }
+
         .mic-wrapper {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 10px;
         }
 
         .mic-btn {
-            width: 80px;
-            height: 80px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
             color: var(--primary);
-            font-size: 2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             z-index: 5;
             transition: all var(--transition-spring);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -523,7 +568,7 @@
         .mic-btn:hover {
             transform: scale(1.05);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px var(--primary-glow);
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         /* Listening State */
@@ -553,13 +598,13 @@
         /* Button Animations */
         @keyframes mic-pulse-danger {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 25px rgba(239, 68, 68, 0); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
         @keyframes mic-pulse-primary {
             0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); transform: scale(1); }
-            50% { box-shadow: 0 0 0 20px rgba(0, 210, 255, 0); transform: scale(1.1); }
+            50% { box-shadow: 0 0 0 12px rgba(0, 210, 255, 0); transform: scale(1.05); }
             100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); transform: scale(1); }
         }
 
@@ -572,7 +617,7 @@
         .keyboard-hint {
             font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         /* ==========================================================================
@@ -780,29 +825,24 @@
 </head>
 <body>
 
-    <!-- Background Elements -->
     <div class="bg-elements">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
     </div>
 
-    <!-- Toast Container -->
     <div id="toast-container"></div>
 
-    <!-- Welcome Screen -->
     <div id="welcome-screen">
         <i class="fa-solid fa-robot robot-logo"></i>
-        <h1 class="welcome-title">المساعد الصوتي الذكي</h1>
-        <p class="welcome-subtitle">مساعد ذكاء اصطناعي فوري. تحدث باللغة العربية أو الإنجليزية.</p>
+        <h1 class="welcome-title">المساعد الصوتي والذكي</h1>
+        <p class="welcome-subtitle">اسأل عن أي شيء، متاح بالتحدث أو الكتابة باللغة العربية أو الإنجليزية.</p>
         <button class="btn btn-primary start-btn" onclick="app.startApp()">
-            <i class="fa-solid fa-microphone"></i> ابدأ التحدث الآن
+            <i class="fa-solid fa-microphone"></i> ابدأ الآن
         </button>
     </div>
 
-    <!-- Main App Container -->
     <div class="app-container">
         
-        <!-- Sidebar -->
         <aside id="sidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn" onclick="app.clearChat()">
@@ -826,10 +866,8 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             
-            <!-- Header -->
             <header>
                 <div class="header-left">
                     <button class="menu-btn" onclick="app.toggleSidebar()">
@@ -851,25 +889,22 @@
                 </div>
             </header>
 
-            <!-- Chat Window -->
             <div id="chat-window">
-                <!-- Initial AI Greeting -->
                 <div class="message-row row-ai">
                     <div class="message-content">
                         <div class="avatar avatar-ai"><i class="fa-solid fa-robot"></i></div>
                         <div>
                             <div class="bubble bubble-ai">
-                                <p>مرحباً! أنا <strong>مساعدك الذكي</strong>. كيف يمكنني مساعدتك اليوم؟</p>
+                                <p>مرحباً! أنا <strong>مساعدك الذكي</strong>. كيف يمكنني مساعدتك اليوم؟ يمكنك الكتابة لي أو التحدث عبر المايك.</p>
                             </div>
                             <div class="msg-meta">
                                 <span>الآن</span>
-                                <i class="fa-solid fa-volume-high action-icon" onclick="app.speakText('مرحباً! أنا مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟')"></i>
+                                <i class="fa-solid fa-volume-high action-icon" onclick="app.speakText('مرحباً! أنا مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟ يمكنك الكتابة لي أو التحدث عبر المايك.')"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Typing Indicator Container -->
                 <div class="message-row row-ai typing-container" id="typing-indicator">
                     <div class="message-content">
                         <div class="avatar avatar-ai"><i class="fa-solid fa-robot"></i></div>
@@ -882,24 +917,29 @@
                 </div>
             </div>
 
-            <!-- Control Area -->
             <div class="control-area">
-                <!-- Real Canvas Visualizer -->
                 <canvas id="audio-visualizer"></canvas>
 
-                <div class="status-display" id="status-text">جاهز للاستماع</div>
+                <div class="status-display" id="status-text">جاهز للاستماع أو الكتابة</div>
                 
-                <div class="mic-wrapper">
-                    <button class="mic-btn" id="mic-btn" onclick="app.toggleMic()">
-                        <i class="fa-solid fa-microphone" id="mic-icon"></i>
+                <div class="input-container">
+                    <input type="text" id="text-input" class="text-input" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key === 'Enter') app.sendTextMessage()">
+                    
+                    <button id="send-btn" class="send-btn" onclick="app.sendTextMessage()" title="إرسال">
+                        <i class="fa-solid fa-paper-plane" style="transform: scaleX(-1);"></i>
                     </button>
+
+                    <div class="mic-wrapper">
+                        <button class="mic-btn" id="mic-btn" onclick="app.toggleMic()">
+                            <i class="fa-solid fa-microphone" id="mic-icon"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="keyboard-hint">اضغط على الميكروفون لبدء التحدث أو زر المسافة (Space)</div>
+                <div class="keyboard-hint">اضغط Enter للإرسال، أو Space لتفعيل المايك (عند عدم الكتابة)</div>
             </div>
         </main>
     </div>
 
-    <!-- Settings Modal -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-box">
             <div class="modal-header">
@@ -929,9 +969,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-         JAVASCRIPT LOGIC
-         ========================================================================== -->
     <script>
         class UIManager {
             static showToast(message, type = 'info') {
@@ -1038,7 +1075,7 @@
                 this.sidebar = document.getElementById('sidebar');
                 
                 this.state = 'idle'; 
-                this.language = 'ar-EG'; // تعيين اللغة الافتراضية إلى العربية
+                this.language = 'ar-EG'; 
                 this.voiceSpeed = 1.0;
                 this.isDarkTheme = true;
                 
@@ -1119,7 +1156,7 @@
                     case 'idle':
                         this.micBtn.classList.add('idle');
                         this.micIcon.classList.add('fa-microphone');
-                        this.statusText.innerText = "اضغط للتحدث";
+                        this.statusText.innerText = "جاهز للاستماع أو الكتابة";
                         this.statusText.style.color = "var(--text-muted)";
                         this.visualizer.stop();
                         break;
@@ -1211,6 +1248,23 @@
                 }
             }
 
+            sendTextMessage() {
+                const inputElement = document.getElementById('text-input');
+                const text = inputElement.value.trim();
+                
+                if (text === "" || this.state === 'processing') return;
+
+                if (this.state === 'speaking') {
+                    this.audioPlayer.pause();
+                }
+                if (this.state === 'listening') {
+                    this.recognition.stop();
+                }
+
+                this.processUserInput(text);
+                inputElement.value = "";
+            }
+
             addMessageToUI(text, sender) {
                 const time = UIManager.formatTime();
                 const isUser = sender === 'user';
@@ -1295,66 +1349,4 @@
                     this.updateState('idle');
                 };
                 this.audioPlayer.onerror = (e) => {
-                    console.warn("فشل محرك النطق الخارجي، جاري الانتقال للمحرك الداخلي للمتصفح.");
-                };
-            }
-
-            speakText(rawText) {
-                const cleanText = rawText.replace(/[*#_`~]/g, '').trim();
-                this.updateState('speaking');
-
-                const ttsUrl = `${this.TTS_API}${encodeURIComponent(cleanText)}`;
-                this.audioPlayer.src = ttsUrl;
-                this.audioPlayer.playbackRate = this.voiceSpeed;
-                
-                this.audioPlayer.play().catch(error => {
-                    this.nativeTTSFallback(cleanText);
-                });
-            }
-
-            nativeTTSFallback(text) {
-                if (!window.speechSynthesis) {
-                    this.updateState('idle');
-                    UIManager.showToast('جهازك لا يدعم تحويل النص إلى كلام.', 'error');
-                    return;
-                }
-
-                window.speechSynthesis.cancel();
-
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = this.language;
-                utterance.rate = this.voiceSpeed;
-
-                utterance.onstart = () => this.updateState('speaking');
-                utterance.onend = () => this.updateState('idle');
-                utterance.onerror = () => this.updateState('idle');
-
-                window.speechSynthesis.speak(utterance);
-            }
-
-            clearChat() {
-                const rows = Array.from(this.chatWindow.querySelectorAll('.message-row'));
-                rows.forEach(row => {
-                    if (row !== this.typingIndicator && !row.innerHTML.includes('مساعدك الذكي')) {
-                        row.remove();
-                    }
-                });
-                
-                this.closeSettings();
-                if(window.innerWidth <= 768) this.sidebar.classList.remove('open');
-                
-                UIManager.showToast('تم مسح السجل بنجاح', 'success');
-            }
-        }
-
-        const app = new AIVoiceAssistant();
-        
-        document.addEventListener('keydown', (e) => {
-            if(e.code === 'Space' && e.target === document.body && document.getElementById('welcome-screen').classList.contains('hidden')) {
-                e.preventDefault();
-                app.toggleMic();
-            }
-        });
-    </script>
-</body>
-</html>
+                    console.warn("فشل محرك النطق الخارجي، جاري الانتقال للمحرك
